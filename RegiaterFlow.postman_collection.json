@@ -1,0 +1,2877 @@
+{
+	"info": {
+		"_postman_id": "eb73a14a-19ec-4a4d-bad7-fd0618037822",
+		"name": "RegiaterFlow",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40353881"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Auth",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-platform",
+								"value": "Web"
+							},
+							{
+								"key": "x-version",
+								"value": "7.1.0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "Referer",
+								"value": "https://testapp.viome.com/login"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\",\n    \"rememberMe\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://testapp.viome.com/api/authenticate/credentials",
+							"protocol": "https",
+							"host": [
+								"testapp",
+								"viome",
+								"com"
+							],
+							"path": [
+								"api",
+								"authenticate",
+								"credentials"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "LoginUser",
+			"item": [
+				{
+					"name": "RegisterAsLoginUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var status = pm.response.json().status;",
+									"if (pm.response.code === 200 && status == 'VM_OK') {",
+									"",
+									"    pm.test(\"Status field validation : \"+status, function () {",
+									"        pm.expect(status).to.equal('VM_OK');",
+									"    });",
+									"",
+									"    const resp = pm.response.json().data;",
+									"",
+									"    var kitType = resp.kit.kitType;",
+									"    pm.test(\"KitType field validation : \"+kitType, function () {",
+									"        pm.expect(kitType).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var orderId = resp.kit.orderId;",
+									"    pm.test(\"OrderId field validation : \"+orderId, function () {",
+									"        pm.expect(orderId).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var kitId = resp.kitId;",
+									"    pm.test(\"kitId field validation : \"+kitId, function () {",
+									"        pm.expect(kitId).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var kitId = resp.tests;",
+									"    kitId.forEach(test => {",
+									"        pm.test(\"TestId field validation : \"+test.id, function () {",
+									"            pm.expect(test.id).to.be.a('number').and.to.be.exist",
+									"        });",
+									"",
+									"        pm.test(\"TestType field validation : \"+test.testType, function () {",
+									"            pm.expect(test.testType).to.be.a('string').and.to.be.exist",
+									"        });",
+									"    })",
+									"",
+									"",
+									"",
+									"} else {",
+									"    pm.test(\"Status Error : \" + status, function () {",
+									"        pm.expect.fail(\"\")",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Referer",
+								"value": "https://testapp.viome.com/registration/kit-id"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "x-platform",
+								"value": "Web"
+							},
+							{
+								"key": "x-version",
+								"value": "7.1.0"
+							},
+							{
+								"key": "Cookie",
+								"value": "_gid=GA1.2.1288376993.1743320836; _gcl_au=1.1.1401147094.1743320837; _fbp=fb.1.1743320836610.786644735345975741; _ga=GA1.2.293851551.1742992822; _uetsid=337675800d3b11f0b5fc13a69370a323; _uetvid=337655500d3b11f082b6cb0ae7b90198; authenticator=1-97f6f5b365ea0bdfc057dea3948ee505de20be24-1-VUmqSPM/eN1EPmvt7dB+50jpA2Cjb78p/Mn2shEE6FKsW+ztIXuj5Q3FYzdB2m+/lBYBr3SogAw3VlCQqfVAJlQGU8liPqefUs/hxe17gBTPPOrzKSpvuDQkhAs6iF6+6st3Bn04yfOqf5m0xIUUou9auz6RckBMjGbEJcuT8+MTwsmGqxpMVw84ZLOP3KEH6tl9dlpp1nrNoCBqKdsMCuf40jZ1kZTpXPUOW4ANygePQdUZyAEIdr+zfatHZ8uwLJsXiq59UUD0CIszB/3R/uK9GdUfDgK+2C0zLvkTODj/O8XVyS8zSY6ePOSGOp2obOO3pSiAQhL6a8q2yKI+7uYSNgcjGDVb4xmRP2oQMOFgcOOJD8FXZwK4IEmlj+pJOy1XqMgA5bD91szvXpHqtNjAeURiUpClRxBmFrTAkljiPt8+bxbG4bBYUTeDCdCd9Zw4hVMTgWR/AHxlXEdOZGy2YpURCVAr5QdN+soMHOER2Xxw67GCi5bMRoAk5wPdBhd5rsA6VOiccnwQC1r5u9V0nvtwJqf2ghUwKM11rqb3BzqFnhxaGTW74S4rcrQ5LZ/VCBFE/LziaoyM5P6k0bi/h31qSh3zMn/EeVhTWLx1vSJZBRGQ6Nb8xiJ3kHopAnOPJDeMETZhKDfln7erEa/b+KNuG/GwCenqYPJCY9ZycW5TVC9zMNFpaFgcopfCASPtai6OGvjYvobRQxRkoVafHZk6jXYgQRsy0wWU2wNM; _gat_G-8B9M9KJCT6=1; _gat=1; _ga_K3P5PSXTVT=GS1.1.1743318840.17.1.1743321585.56.0.0; _ga_8B9M9KJCT6=GS1.1.1743318839.21.1.1743321585.0.0.0"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/register/kit/byBarcode/{{kitId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"register",
+								"kit",
+								"byBarcode",
+								"{{kitId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "canRegister",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var status = pm.response.json().status;",
+									"if (pm.response.code === 200 && status == 'VM_OK') {",
+									"    pm.test(\"Status field validation : \" + status, function () {",
+									"        pm.expect(status).to.equal('VM_OK');",
+									"    });",
+									"",
+									"    const resp = pm.response.json().data;",
+									"",
+									"    var message = resp.message;",
+									"    pm.test(\"Message field validation : \" + message, function () {",
+									"        pm.expect(message).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var registrationAllowed = resp.registrationAllowed;",
+									"    pm.test(\"RegistrationAllowed field validation : \" + registrationAllowed, function () {",
+									"        pm.expect(registrationAllowed).to.be.a('boolean').and.to.be.exist",
+									"    });",
+									"",
+									"    if (registrationAllowed) {",
+									"        var testTypes = resp.testTypes;",
+									"        testTypes.forEach(test => {",
+									"            pm.test(\"test field validation : \" + test, function () {",
+									"                pm.expect(registrationAllowed).to.be.a('boolean').and.to.be.exist",
+									"            });",
+									"        })",
+									"    } else {",
+									"        var uiMessage = resp.uiMessage;",
+									"        if (uiMessage.length > 0) {",
+									"            uiMessageData = uiMessage[0]",
+									"            var bodyText = uiMessageData.bodyText;",
+									"            pm.test(\"bodyText field validation : \" + bodyText, function () {",
+									"                pm.expect(bodyText).to.be.a('string').and.to.be.exist",
+									"            });",
+									"",
+									"            var bodyText = uiMessageData.bodyText;",
+									"            pm.test(\"bodyText field validation : \" + bodyText, function () {",
+									"                pm.expect(bodyText).to.be.a('string').and.to.be.exist",
+									"            });",
+									"",
+									"            var headerText = uiMessageData.headerText;",
+									"            pm.test(\"headerText field validation : \" + headerText, function () {",
+									"                pm.expect(headerText).to.be.a('string').and.to.be.exist",
+									"            });",
+									"",
+									"            var internalName = uiMessageData.internalName;",
+									"            pm.test(\"internalName field validation : \" + internalName, function () {",
+									"                pm.expect(internalName).to.be.a('string').and.to.be.exist",
+									"            });",
+									"        }",
+									"    }",
+									"",
+									"} else {",
+									"    pm.test(\"Status Error : \" + status, function () {",
+									"        pm.expect.fail(\"\")",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "https://testapp.viome.com"
+							},
+							{
+								"key": "Referer",
+								"value": "https://testapp.viome.com/registration/kit-id"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "x-platform",
+								"value": "Web"
+							},
+							{
+								"key": "x-version",
+								"value": "7.1.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"kitId\":\"{{kitId}}\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/register/canThisUserRegisterKit",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"register",
+								"canThisUserRegisterKit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "userProfile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var status = pm.response.json().status;",
+									"if (pm.response.code === 200 && status == 'VM_OK') {",
+									"    pm.test(\"Status field validation : \" + status, function () {",
+									"        pm.expect(status).to.equal('VM_OK');",
+									"    });",
+									"",
+									"    const resp = pm.response.json().data;",
+									"",
+									"    var address = resp.address.addressID;",
+									"    pm.test(\"Address field validation : \" + address, function () {",
+									"        pm.expect(address).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var addressLine1 = resp.address.addressLine1;",
+									"    pm.test(\"AddressLine1 field validation : \" + addressLine1, function () {",
+									"        pm.expect(addressLine1).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var addressLine1 = resp.address.addressLine1;",
+									"    pm.test(\"AddressLine1 field validation : \" + addressLine1, function () {",
+									"        pm.expect(addressLine1).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var addressLine2 = resp.address.addressLine2;",
+									"    pm.test(\"addressLine2 field validation : \" + addressLine2, function () {",
+									"        pm.expect(addressLine1).to.be.a('string')",
+									"    });",
+									"",
+									"    var city = resp.address.city;",
+									"    pm.test(\"City field validation : \" + city, function () {",
+									"        pm.expect(city).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var country = resp.address.country;",
+									"    pm.test(\"Country field validation : \" + country, function () {",
+									"        pm.expect(country).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var state = resp.address.state;",
+									"    pm.test(\"State field validation : \" + state, function () {",
+									"        pm.expect(state).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var userID = resp.address.userID;",
+									"    pm.test(\"UserID field validation : \" + userID, function () {",
+									"        pm.expect(userID).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var zip = resp.address.zip;",
+									"    pm.test(\"Zip field validation : \" + zip, function () {",
+									"        pm.expect(zip).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var birthDate = resp.birthDate;",
+									"    pm.test(\"BirthDate field validation : \" + birthDate, function () {",
+									"        pm.expect(birthDate).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var countryPhoneCode = resp.countryPhoneCode;",
+									"    pm.test(\"CountryPhoneCode field validation : \" + countryPhoneCode, function () {",
+									"        pm.expect(countryPhoneCode).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var email = resp.email;",
+									"    pm.test(\"Email field validation : \" + email, function () {",
+									"        pm.expect(email).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var firstName = resp.firstName;",
+									"    pm.test(\"FirstName field validation : \" + firstName, function () {",
+									"        pm.expect(firstName).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var fullName = resp.fullName;",
+									"    pm.test(\"fullName field validation : \" + fullName, function () {",
+									"        pm.expect(fullName).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var gender = resp.gender;",
+									"    pm.test(\"Gender field validation : \" + gender, function () {",
+									"        pm.expect(gender).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var lastName = resp.lastName;",
+									"    pm.test(\"LastName field validation : \" + lastName, function () {",
+									"        pm.expect(lastName).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var userId = resp.userId;",
+									"    pm.test(\"UserId field validation : \" + userId, function () {",
+									"        pm.expect(userId).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"",
+									"",
+									"} else {",
+									"    pm.test(\"Status Error : \" + status, function () {",
+									"        pm.expect.fail(\"\")",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Referer",
+								"value": "https://testapp.viome.com/registration/kit-id"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "x-platform",
+								"value": "Web"
+							},
+							{
+								"key": "x-version",
+								"value": "7.1.0"
+							},
+							{
+								"key": "Cookie",
+								"value": "_ga_K3P5PSXTVT=GS1.1.1742807164.8.0.1742808853.60.0.0; _gid=GA1.2.631003659.1742992822; _gcl_au=1.1.2032392666.1742992823; _fbp=fb.1.1742992823641.411820881369518236; _ga_QBRYR4Y4HG=GS1.1.1743058855.7.1.1743059055.60.0.0; _ga_M10GRCGDXZ=GS1.1.1743058855.3.1.1743059055.0.0.0; _gat_G-8B9M9KJCT6=1; authenticator=1-0b6604608a26327c48f44652f7ff5c9a3c28f178-1-WQLgT6nxMG0W6bAurHejIU7aYfXLIu9ezni1SNMYcVdJfu5Haxsus015deTBzl3KaGckvVdLT215mOCJnocEnr7ZTQu11jrKspRd1+5p9xFkUzv/3zc5qD5sMRr8ypNZd5TQdRmuaz0n0W62X0IK0GKgHskvgLj6Qxo0lSZG9M+c63sTjPlg1Mq42bEmNsrA9JKWq2JlX60KogAn4aNf3X0/uax0W+dpy05ImcR9lyciEUKjv38fprXCrbm7MJjLD5GvyLsr/aJsVfVwsFYmOt22+FUTrUdn/uMXogjWLZ2jRAKuyET8HYBkFkvMGsIFFhHy1bqVdIA/EZ+Fb0GVfTWEF6v+3oIeBL9LPUhOJXrTDUk6eLtapSBtY+u6QYRgEd7d2nyof8gGfcOIJUwL+Lzg0kyqULrmT77MtlqP2Rcb6jNgVFFtLilq5DAMRVUl38ZQcW7wTfny9E47nu/AWN4TFcEq2eq9RG/vfxkPxBo4aVLTpDkWNbzXFAnpQRg8vHbR116hCDX1MfmZqgDaRE2EacGLckLO7k13OnB63BYCPlCq0jr+ED8fBxI63QX1aQCoC5NdSNgHq2r+ybDsRnNWhssQfsGtjQBNxABfjTOmMPZBYxbRoUlvMLs/3M3ocT5t4Wgw5d53BvoOTXlRfFVtzZvzu95JTeJSwdzcdV6HPcj6HkyfPVLl6bS0cAQx9QBqIO5nv7rr5CfQwdg5iqRIaBe8Cra3KrbP0d+Aa6oRRS1Log==; _uetsid=7c497f300a3f11f093eb6b34177c1940; _uetvid=7c4997300a3f11f0beb9ef811bfb957c; _ga_K3P5PSXTVT=GS1.1.1743059068.10.1.1743059686.34.0.0; _ga=GA1.2.293851551.1742992822; _ga_8B9M9KJCT6=GS1.1.1743059068.14.1.1743059686.0.0.0"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/user/profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "stateInfo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var status = pm.response.json().status;",
+									"if (pm.response.code === 200 && status == 'VM_OK') {",
+									"    pm.test(\"Status field validation : \" + status, function () {",
+									"        pm.expect(status).to.equal('VM_OK');",
+									"    });",
+									"",
+									"    const countrySubdivisions = pm.response.json().data.countrySubdivisions;",
+									"    countrySubdivisions.forEach(country => {",
+									"        pm.test(\"country: code field validation : \" + country.code, function () {",
+									"            pm.expect(country.code).to.be.a('string').and.to.be.exist",
+									"        });",
+									"",
+									"        pm.test(\"country: isEnabled field validation : \" + country.isEnabled, function () {",
+									"            pm.expect(country.isEnabled).to.be.a('boolean').and.to.be.exist",
+									"        });",
+									"",
+									"        pm.test(\"country: name field validation : \" + country.name, function () {",
+									"            pm.expect(country.name).to.be.a('string').and.to.be.exist",
+									"        });",
+									"    })",
+									"",
+									"",
+									"",
+									"} else {",
+									"    pm.test(\"Status Error : \" + status, function () {",
+									"        pm.expect.fail(\"\")",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Referer",
+								"value": "https://testapp.viome.com/registration/contact-information?kit-id=6FFE-8F8A-344D"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "x-platform",
+								"value": "Web"
+							},
+							{
+								"key": "x-version",
+								"value": "7.1.0"
+							},
+							{
+								"key": "Cookie",
+								"value": "_ga_K3P5PSXTVT=GS1.1.1742807164.8.0.1742808853.60.0.0; _gid=GA1.2.631003659.1742992822; _gcl_au=1.1.2032392666.1742992823; _fbp=fb.1.1742992823641.411820881369518236; _ga_QBRYR4Y4HG=GS1.1.1743058855.7.1.1743059055.60.0.0; _ga_M10GRCGDXZ=GS1.1.1743058855.3.1.1743059055.0.0.0; _gat_G-8B9M9KJCT6=1; authenticator=1-0b6604608a26327c48f44652f7ff5c9a3c28f178-1-WQLgT6nxMG0W6bAurHejIU7aYfXLIu9ezni1SNMYcVdJfu5Haxsus015deTBzl3KaGckvVdLT215mOCJnocEnr7ZTQu11jrKspRd1+5p9xFkUzv/3zc5qD5sMRr8ypNZd5TQdRmuaz0n0W62X0IK0GKgHskvgLj6Qxo0lSZG9M+c63sTjPlg1Mq42bEmNsrA9JKWq2JlX60KogAn4aNf3X0/uax0W+dpy05ImcR9lyciEUKjv38fprXCrbm7MJjLD5GvyLsr/aJsVfVwsFYmOt22+FUTrUdn/uMXogjWLZ2jRAKuyET8HYBkFkvMGsIFFhHy1bqVdIA/EZ+Fb0GVfTWEF6v+3oIeBL9LPUhOJXrTDUk6eLtapSBtY+u6QYRgEd7d2nyof8gGfcOIJUwL+Lzg0kyqULrmT77MtlqP2Rcb6jNgVFFtLilq5DAMRVUl38ZQcW7wTfny9E47nu/AWN4TFcEq2eq9RG/vfxkPxBo4aVLTpDkWNbzXFAnpQRg8vHbR116hCDX1MfmZqgDaRE2EacGLckLO7k13OnB63BYCPlCq0jr+ED8fBxI63QX1aQCoC5NdSNgHq2r+ybDsRnNWhssQfsGtjQBNxABfjTOmMPZBYxbRoUlvMLs/3M3ocT5t4Wgw5d53BvoOTXlRfFVtzZvzu95JTeJSwdzcdV6HPcj6HkyfPVLl6bS0cAQx9QBqIO5nv7rr5CfQwdg5iqRIaBe8Cra3KrbP0d+Aa6oRRS1Log==; _uetsid=7c497f300a3f11f093eb6b34177c1940; _uetvid=7c4997300a3f11f0beb9ef811bfb957c; _ga_K3P5PSXTVT=GS1.1.1743059068.10.1.1743059686.34.0.0; _ga=GA1.2.293851551.1742992822; _ga_8B9M9KJCT6=GS1.1.1743059068.14.1.1743059686.0.0.0"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/public/stateInfo/US",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"stateInfo",
+								"US"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "countryInfo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var status = pm.response.json().status;",
+									"if (pm.response.code === 200 && status == 'VM_OK') {",
+									"    pm.test(\"Status field validation : \" + status, function () {",
+									"        pm.expect(status).to.equal('VM_OK');",
+									"    });",
+									"",
+									"    const countries = pm.response.json().data.countries;",
+									"    countries.forEach(country => {",
+									"        // pm.test(\"countries: countryCode field validation : \" + country.countryCode, function () {",
+									"        //     pm.expect(country.countryCode).to.be.a('string').and.to.be.exist",
+									"        // });",
+									"        ",
+									"        // Changes required here ---------------------------------",
+									"        // pm.test(\"countries: highlightedPickerOrder field validation : \" + country.highlightedPickerOrder, function () {",
+									"        //     pm.expect(country.highlightedPickerOrder).to.be.a('number').and.to.be.exist",
+									"        // });",
+									"        //--------------------------------------------------------------------------------------------------",
+									"",
+									"",
+									"        pm.test(\"countries: isEnabled field validation : \" + country.isEnabled, function () {",
+									"            pm.expect(country.isEnabled).to.be.a('boolean').and.to.be.exist",
+									"        });",
+									"",
+									"        pm.test(\"countries: name field validation : \" + country.name, function () {",
+									"            pm.expect(country.name).to.be.a('string').and.to.be.exist",
+									"        });",
+									"",
+									"        pm.test(\"countries: phoneCode field validation : \" + country.phoneCode, function () {",
+									"            pm.expect(country.phoneCode).to.be.a('string').and.to.be.exist",
+									"        });",
+									"",
+									"    })",
+									"",
+									"",
+									"",
+									"} else {",
+									"    pm.test(\"Status Error : \" + status, function () {",
+									"        pm.expect.fail(\"\")",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Referer",
+								"value": "https://testapp.viome.com/registration/contact-information?kit-id=6FFE-8F8A-344D"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "x-platform",
+								"value": "Web"
+							},
+							{
+								"key": "x-version",
+								"value": "7.1.0"
+							},
+							{
+								"key": "Cookie",
+								"value": "_ga_K3P5PSXTVT=GS1.1.1742807164.8.0.1742808853.60.0.0; _gid=GA1.2.631003659.1742992822; _gcl_au=1.1.2032392666.1742992823; _fbp=fb.1.1742992823641.411820881369518236; _ga_QBRYR4Y4HG=GS1.1.1743058855.7.1.1743059055.60.0.0; _ga_M10GRCGDXZ=GS1.1.1743058855.3.1.1743059055.0.0.0; _gat_G-8B9M9KJCT6=1; authenticator=1-0b6604608a26327c48f44652f7ff5c9a3c28f178-1-WQLgT6nxMG0W6bAurHejIU7aYfXLIu9ezni1SNMYcVdJfu5Haxsus015deTBzl3KaGckvVdLT215mOCJnocEnr7ZTQu11jrKspRd1+5p9xFkUzv/3zc5qD5sMRr8ypNZd5TQdRmuaz0n0W62X0IK0GKgHskvgLj6Qxo0lSZG9M+c63sTjPlg1Mq42bEmNsrA9JKWq2JlX60KogAn4aNf3X0/uax0W+dpy05ImcR9lyciEUKjv38fprXCrbm7MJjLD5GvyLsr/aJsVfVwsFYmOt22+FUTrUdn/uMXogjWLZ2jRAKuyET8HYBkFkvMGsIFFhHy1bqVdIA/EZ+Fb0GVfTWEF6v+3oIeBL9LPUhOJXrTDUk6eLtapSBtY+u6QYRgEd7d2nyof8gGfcOIJUwL+Lzg0kyqULrmT77MtlqP2Rcb6jNgVFFtLilq5DAMRVUl38ZQcW7wTfny9E47nu/AWN4TFcEq2eq9RG/vfxkPxBo4aVLTpDkWNbzXFAnpQRg8vHbR116hCDX1MfmZqgDaRE2EacGLckLO7k13OnB63BYCPlCq0jr+ED8fBxI63QX1aQCoC5NdSNgHq2r+ybDsRnNWhssQfsGtjQBNxABfjTOmMPZBYxbRoUlvMLs/3M3ocT5t4Wgw5d53BvoOTXlRfFVtzZvzu95JTeJSwdzcdV6HPcj6HkyfPVLl6bS0cAQx9QBqIO5nv7rr5CfQwdg5iqRIaBe8Cra3KrbP0d+Aa6oRRS1Log==; _uetsid=7c497f300a3f11f093eb6b34177c1940; _uetvid=7c4997300a3f11f0beb9ef811bfb957c; _ga_K3P5PSXTVT=GS1.1.1743059068.10.1.1743059686.34.0.0; _ga=GA1.2.293851551.1742992822; _ga_8B9M9KJCT6=GS1.1.1743059068.14.1.1743059686.0.0.0"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/public/countryInfo",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"public",
+								"countryInfo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "validateAddress",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var status = pm.response.json().status;",
+									"if (pm.response.code === 200 && status == 'VM_OK') {",
+									"    pm.test(\"Status field validation : \" + status, function () {",
+									"        pm.expect(status).to.equal('VM_OK');",
+									"    });",
+									"",
+									"    const addressLine1 = pm.response.json().data.address.addressLine1;",
+									"    pm.test(\"Address: addressLine1 field validation : \" + addressLine1, function () {",
+									"        pm.expect(addressLine1).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    const city = pm.response.json().data.address.city;",
+									"    pm.test(\"Address: city field validation : \" + city, function () {",
+									"        pm.expect(city).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    const country = pm.response.json().data.address.country;",
+									"    pm.test(\"Address: country field validation : \" + country, function () {",
+									"        pm.expect(country).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    const geoLatitude = pm.response.json().data.address.geoLatitude;",
+									"    pm.test(\"Address: geoLatitude field validation : \" + country, function () {",
+									"        pm.expect(geoLatitude).to.be.a('number').and.to.be.exist",
+									"    });",
+									"",
+									"    const geoLongitude = pm.response.json().data.address.geoLongitude;",
+									"    pm.test(\"Address: geoLongitude field validation : \" + country, function () {",
+									"        pm.expect(geoLongitude).to.be.a('number').and.to.be.exist",
+									"    });",
+									"",
+									"    const state = pm.response.json().data.address.state;",
+									"    pm.test(\"Address: state field validation : \" + state, function () {",
+									"        pm.expect(state).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    const zip = pm.response.json().data.address.zip;",
+									"    pm.test(\"Address: zip field validation : \" + zip, function () {",
+									"        pm.expect(zip).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"",
+									"",
+									"} else {",
+									"    pm.test(\"Status Error : \" + status, function () {",
+									"        pm.expect.fail(\"\")",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "https://testapp.viome.com"
+							},
+							{
+								"key": "Referer",
+								"value": "https://testapp.viome.com/registration/contact-information?kit-id=6FFE-8F8A-344D"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "x-platform",
+								"value": "Web"
+							},
+							{
+								"key": "x-version",
+								"value": "7.1.0"
+							},
+							{
+								"key": "Cookie",
+								"value": "_ga_K3P5PSXTVT=GS1.1.1742807164.8.0.1742808853.60.0.0; _gid=GA1.2.631003659.1742992822; _gcl_au=1.1.2032392666.1742992823; _fbp=fb.1.1742992823641.411820881369518236; authenticator=1-0b6604608a26327c48f44652f7ff5c9a3c28f178-1-WQLgT6nxMG0W6bAurHejIU7aYfXLIu9ezni1SNMYcVdJfu5Haxsus015deTBzl3KaGckvVdLT215mOCJnocEnr7ZTQu11jrKspRd1+5p9xFkUzv/3zc5qD5sMRr8ypNZd5TQdRmuaz0n0W62X0IK0GKgHskvgLj6Qxo0lSZG9M+c63sTjPlg1Mq42bEmNsrA9JKWq2JlX60KogAn4aNf3X0/uax0W+dpy05ImcR9lyciEUKjv38fprXCrbm7MJjLD5GvyLsr/aJsVfVwsFYmOt22+FUTrUdn/uMXogjWLZ2jRAKuyET8HYBkFkvMGsIFFhHy1bqVdIA/EZ+Fb0GVfTWEF6v+3oIeBL9LPUhOJXrTDUk6eLtapSBtY+u6QYRgEd7d2nyof8gGfcOIJUwL+Lzg0kyqULrmT77MtlqP2Rcb6jNgVFFtLilq5DAMRVUl38ZQcW7wTfny9E47nu/AWN4TFcEq2eq9RG/vfxkPxBo4aVLTpDkWNbzXFAnpQRg8vHbR116hCDX1MfmZqgDaRE2EacGLckLO7k13OnB63BYCPlCq0jr+ED8fBxI63QX1aQCoC5NdSNgHq2r+ybDsRnNWhssQfsGtjQBNxABfjTOmMPZBYxbRoUlvMLs/3M3ocT5t4Wgw5d53BvoOTXlRfFVtzZvzu95JTeJSwdzcdV6HPcj6HkyfPVLl6bS0cAQx9QBqIO5nv7rr5CfQwdg5iqRIaBe8Cra3KrbP0d+Aa6oRRS1Log==; _ga=GA1.2.293851551.1742992822; _uetsid=7c497f300a3f11f093eb6b34177c1940; _uetvid=7c4997300a3f11f0beb9ef811bfb957c; _ga_QBRYR4Y4HG=GS1.1.1743083241.9.1.1743083266.35.0.0; _ga_M10GRCGDXZ=GS1.1.1743083241.5.1.1743083266.0.0.0; _gat_G-8B9M9KJCT6=1; _ga_K3P5PSXTVT=GS1.1.1743082282.13.1.1743083276.54.0.0; _ga_8B9M9KJCT6=GS1.1.1743082282.17.1.1743083276.0.0.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"country\": \"US\",\n    \"addressLine1\": \"105th Ave NE\",\n    \"addressLine2\": \"205\",\n    \"zip\": \"98004\",\n    \"city\": \"Bellevue\",\n    \"state\": \"WA\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/register/validateAddress",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"register",
+								"validateAddress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "validateGeoAndAgeForKit",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var status = pm.response.json().status;",
+									"if (pm.response.code === 200 && status == 'VM_OK') {",
+									"    pm.test(\"Status field validation : \" + status, function () {",
+									"        pm.expect(status).to.equal('VM_OK');",
+									"    });",
+									"",
+									"    const resp = pm.response.json().data;",
+									"",
+									"    var registrationAllowed = resp.registrationAllowed;",
+									"    pm.test(\"RegistrationAllowed field validation : \" + registrationAllowed, function () {",
+									"        pm.expect(registrationAllowed).to.be.a('boolean').and.to.be.exist",
+									"    });",
+									"",
+									"    if (registrationAllowed) {",
+									"        var testTypes = resp.testTypes;",
+									"        testTypes.forEach(test => {",
+									"            pm.test(\"test field validation : \" + test, function () {",
+									"                pm.expect(registrationAllowed).to.be.a('boolean').and.to.be.exist",
+									"            });",
+									"        })",
+									"    } else {",
+									"        var uiMessage = resp.uiMessage;",
+									"        if (uiMessage.length > 0) {",
+									"            uiMessageData = uiMessage[0]",
+									"            var bodyText = uiMessageData.bodyText;",
+									"            pm.test(\"bodyText field validation : \" + bodyText, function () {",
+									"                pm.expect(bodyText).to.be.a('string').and.to.be.exist",
+									"            });",
+									"",
+									"            var bodyText = uiMessageData.bodyText;",
+									"            pm.test(\"bodyText field validation : \" + bodyText, function () {",
+									"                pm.expect(bodyText).to.be.a('string').and.to.be.exist",
+									"            });",
+									"",
+									"            var headerText = uiMessageData.headerText;",
+									"            pm.test(\"headerText field validation : \" + headerText, function () {",
+									"                pm.expect(headerText).to.be.a('string').and.to.be.exist",
+									"            });",
+									"",
+									"            var internalName = uiMessageData.internalName;",
+									"            pm.test(\"internalName field validation : \" + internalName, function () {",
+									"                pm.expect(internalName).to.be.a('string').and.to.be.exist",
+									"            });",
+									"        }",
+									"    }",
+									"",
+									"} else {",
+									"    pm.test(\"Status Error : \" + status, function () {",
+									"        pm.expect.fail(\"\")",
+									"    });",
+									"}",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "https://testapp.viome.com"
+							},
+							{
+								"key": "Referer",
+								"value": "https://testapp.viome.com/registration/confirmation"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "x-platform",
+								"value": "Web"
+							},
+							{
+								"key": "x-version",
+								"value": "7.1.0"
+							},
+							{
+								"key": "Cookie",
+								"value": "_ga_K3P5PSXTVT=GS1.1.1742807164.8.0.1742808853.60.0.0; _gid=GA1.2.631003659.1742992822; _gcl_au=1.1.2032392666.1742992823; _fbp=fb.1.1742992823641.411820881369518236; authenticator=1-0b6604608a26327c48f44652f7ff5c9a3c28f178-1-WQLgT6nxMG0W6bAurHejIU7aYfXLIu9ezni1SNMYcVdJfu5Haxsus015deTBzl3KaGckvVdLT215mOCJnocEnr7ZTQu11jrKspRd1+5p9xFkUzv/3zc5qD5sMRr8ypNZd5TQdRmuaz0n0W62X0IK0GKgHskvgLj6Qxo0lSZG9M+c63sTjPlg1Mq42bEmNsrA9JKWq2JlX60KogAn4aNf3X0/uax0W+dpy05ImcR9lyciEUKjv38fprXCrbm7MJjLD5GvyLsr/aJsVfVwsFYmOt22+FUTrUdn/uMXogjWLZ2jRAKuyET8HYBkFkvMGsIFFhHy1bqVdIA/EZ+Fb0GVfTWEF6v+3oIeBL9LPUhOJXrTDUk6eLtapSBtY+u6QYRgEd7d2nyof8gGfcOIJUwL+Lzg0kyqULrmT77MtlqP2Rcb6jNgVFFtLilq5DAMRVUl38ZQcW7wTfny9E47nu/AWN4TFcEq2eq9RG/vfxkPxBo4aVLTpDkWNbzXFAnpQRg8vHbR116hCDX1MfmZqgDaRE2EacGLckLO7k13OnB63BYCPlCq0jr+ED8fBxI63QX1aQCoC5NdSNgHq2r+ybDsRnNWhssQfsGtjQBNxABfjTOmMPZBYxbRoUlvMLs/3M3ocT5t4Wgw5d53BvoOTXlRfFVtzZvzu95JTeJSwdzcdV6HPcj6HkyfPVLl6bS0cAQx9QBqIO5nv7rr5CfQwdg5iqRIaBe8Cra3KrbP0d+Aa6oRRS1Log==; _ga=GA1.2.293851551.1742992822; _uetsid=7c497f300a3f11f093eb6b34177c1940; _uetvid=7c4997300a3f11f0beb9ef811bfb957c; _ga_QBRYR4Y4HG=GS1.1.1743083241.9.1.1743083266.35.0.0; _ga_M10GRCGDXZ=GS1.1.1743083241.5.1.1743083266.0.0.0; _gat=1; _gat_G-8B9M9KJCT6=1; _ga_K3P5PSXTVT=GS1.1.1743090700.14.1.1743092968.26.0.0; _ga_8B9M9KJCT6=GS1.1.1743090700.18.1.1743092968.0.0.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"kitId\": \"{{kitId}}\",\n    \"address\": {\n        \"addressLine1\": \"105th Ave NE\",\n        \"addressLine2\": \"205\",\n        \"city\": \"Bellevue\",\n        \"country\": \"US\",\n        \"state\": \"WA\",\n        \"zip\": \"98004\",\n        \"isShippable\": false\n    },\n    \"dateOfBirth\": \"2004-06-08\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/register/validateGeoAndAgeForKit",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"register",
+								"validateGeoAndAgeForKit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getConsentForms",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var status = pm.response.json().status;",
+									"if (pm.response.code === 200 && status == 'VM_OK') {",
+									"    pm.test(\"Status field validation : \" + status, function () {",
+									"        pm.expect(status).to.equal('VM_OK');",
+									"    });",
+									"",
+									"    const resp = pm.response.json().data[0];",
+									"",
+									"    var content = resp.choices[0].content;",
+									"    pm.test(\"Content field validation : \" + content, function () {",
+									"        pm.expect(content).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var ordinal = resp.choices[0].ordinal;",
+									"    pm.test(\"Ordinal field validation : \" + ordinal, function () {",
+									"        pm.expect(ordinal).to.be.a('number').and.to.be.exist",
+									"    });",
+									"",
+									"    var recordValue = resp.choices[0].recordValue;",
+									"    pm.test(\"RecordValue field validation : \" + recordValue, function () {",
+									"        pm.expect(recordValue).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"     var content = resp.content;",
+									"    pm.test(\"Content field validation : \" + content, function () {",
+									"        pm.expect(content).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var header = resp.header;",
+									"    pm.test(\"Header field validation : \" + header, function () {",
+									"        pm.expect(header).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var header = resp.header;",
+									"    pm.test(\"Header field validation : \" + header, function () {",
+									"        pm.expect(header).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var id = resp.id;",
+									"    pm.test(\"Id field validation : \" + id, function () {",
+									"        pm.expect(id).to.be.a('number').and.to.be.exist",
+									"    });",
+									"",
+									"    var ordinal = resp.ordinal;",
+									"    pm.test(\"Ordinal field validation : \" + ordinal, function () {",
+									"        pm.expect(ordinal).to.be.a('number').and.to.be.exist",
+									"    });",
+									"",
+									"    var systemId = resp.systemId;",
+									"    pm.test(\"SystemId field validation : \" + systemId, function () {",
+									"        pm.expect(systemId).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"} else {",
+									"    pm.test(\"Status Error : \" + status, function () {",
+									"        pm.expect.fail(\"\")",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "https://testapp.viome.com"
+							},
+							{
+								"key": "Referer",
+								"value": "https://testapp.viome.com/registration/confirmation"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "x-platform",
+								"value": "Web"
+							},
+							{
+								"key": "x-version",
+								"value": "7.1.0"
+							},
+							{
+								"key": "Cookie",
+								"value": "_ga_K3P5PSXTVT=GS1.1.1742807164.8.0.1742808853.60.0.0; _gid=GA1.2.631003659.1742992822; _gcl_au=1.1.2032392666.1742992823; _fbp=fb.1.1742992823641.411820881369518236; authenticator=1-0b6604608a26327c48f44652f7ff5c9a3c28f178-1-WQLgT6nxMG0W6bAurHejIU7aYfXLIu9ezni1SNMYcVdJfu5Haxsus015deTBzl3KaGckvVdLT215mOCJnocEnr7ZTQu11jrKspRd1+5p9xFkUzv/3zc5qD5sMRr8ypNZd5TQdRmuaz0n0W62X0IK0GKgHskvgLj6Qxo0lSZG9M+c63sTjPlg1Mq42bEmNsrA9JKWq2JlX60KogAn4aNf3X0/uax0W+dpy05ImcR9lyciEUKjv38fprXCrbm7MJjLD5GvyLsr/aJsVfVwsFYmOt22+FUTrUdn/uMXogjWLZ2jRAKuyET8HYBkFkvMGsIFFhHy1bqVdIA/EZ+Fb0GVfTWEF6v+3oIeBL9LPUhOJXrTDUk6eLtapSBtY+u6QYRgEd7d2nyof8gGfcOIJUwL+Lzg0kyqULrmT77MtlqP2Rcb6jNgVFFtLilq5DAMRVUl38ZQcW7wTfny9E47nu/AWN4TFcEq2eq9RG/vfxkPxBo4aVLTpDkWNbzXFAnpQRg8vHbR116hCDX1MfmZqgDaRE2EacGLckLO7k13OnB63BYCPlCq0jr+ED8fBxI63QX1aQCoC5NdSNgHq2r+ybDsRnNWhssQfsGtjQBNxABfjTOmMPZBYxbRoUlvMLs/3M3ocT5t4Wgw5d53BvoOTXlRfFVtzZvzu95JTeJSwdzcdV6HPcj6HkyfPVLl6bS0cAQx9QBqIO5nv7rr5CfQwdg5iqRIaBe8Cra3KrbP0d+Aa6oRRS1Log==; _ga=GA1.2.293851551.1742992822; _uetsid=7c497f300a3f11f093eb6b34177c1940; _uetvid=7c4997300a3f11f0beb9ef811bfb957c; _ga_QBRYR4Y4HG=GS1.1.1743083241.9.1.1743083266.35.0.0; _ga_M10GRCGDXZ=GS1.1.1743083241.5.1.1743083266.0.0.0; _gat=1; _gat_G-8B9M9KJCT6=1; _ga_K3P5PSXTVT=GS1.1.1743090700.14.1.1743092968.26.0.0; _ga_8B9M9KJCT6=GS1.1.1743090700.18.1.1743092968.0.0.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"countryCode\": \"US\",\n    \"dateOfBirth\": \"1990-06-08\",\n    \"kitId\": \"{{kitId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/register/getConsentForms",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"register",
+								"getConsentForms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "newKitForExistingUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var status = pm.response.json().status;",
+									"if (pm.response.code === 200 && status == 'VM_OK') {",
+									"    pm.test(\"Status field validation : \" + status, function () {",
+									"        pm.expect(status).to.equal('VM_OK');",
+									"    });",
+									"",
+									"    const resp = pm.response.json().data;",
+									"",
+									"    var errorMessage = resp.errorMessage;",
+									"    pm.test(\"ErrorMessage field validation : \" + errorMessage, function () {",
+									"        pm.expect(errorMessage).to.eql(null);",
+									"    });",
+									"",
+									"    var registered = resp.registered;",
+									"    pm.test(\"Registered field validation : \" + registered, function () {",
+									"        pm.expect(registered).to.be.a('boolean').and.to.be.exist",
+									"    });",
+									"",
+									"} else {",
+									"    pm.test(\"Status Error : \" + status, function () {",
+									"        pm.expect.fail(\"\")",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "https://testapp.viome.com"
+							},
+							{
+								"key": "Referer",
+								"value": "https://testapp.viome.com/registration/terms-of-service"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "x-platform",
+								"value": "Web"
+							},
+							{
+								"key": "x-version",
+								"value": "7.1.0"
+							},
+							{
+								"key": "Cookie",
+								"value": "_gcl_au=1.1.1401147094.1743320837; _fbp=fb.1.1743320836610.786644735345975741; _gid=GA1.2.1382941422.1743485523; authenticator=1-b03954dbd84382cb31211e2d9f418012d5eb6470-1-qQuAfsTYkT9u4RbYTzXqmoVe9w3hqpDBxUj9rGGbv3GIGJThqYyK8TE+RMnx7Dn+jgAQg2S0OlRb6KpN0V3uJ653RtASWs8HYUCpJIyXuD3QB7JeID7KRB6CNrPZsPA3c3G4iQVbb6AAcScMAWAQljwxGwIOCHcNdV/ZKZKpUsLbDsepq33f84ggLv07lo67tK1VDQo9lgun9cmGBmOH7CuOlDmtG9LHL5nTAF7yyBvBABMsiDe6tPvUVLbUFmK/GOdbnvxcQeJb1dO/vEgJnv+UZntbkPtgOVgK5epG+j4Aw/ANwMsO9jcgHm7CdlGvIlcPA+yX5Uy+8da68KRNpBIwVCc3WxHvXz1DxdGep+nCDhBVagdtKl27TdOVS3rIiGJ1fgkmoUqxPXfmiEnBfthNpQ5eVRkNE/mhoMBEOA0RIpdodvHLm5orKgG/0NaC/CnMwpeBTzZwp4noCAM37n1F0FYvmSRuowoR9ZKlw6kDMzySJJnyeZP+5OLrLs5rx8398A23i65NrpODNFsn0FFHkH2WrW3lxFb4r6jndHHCcCi0bDkEr6zFkl/1bz/Nyy9YxL2oQubDzTtZ7tXVAbKd2lOpFs0VMbId0wEUO58sSt3GIHCzokHYddxYBeKcZCF7J+wMejsGY5dbh9Q0BXX6UrHe2kLzDEyOLn9u46teB1BAvwvTFp2L1rZ3ZPJs4NC0RiHa+af/colyKPiMPAlUWmbWlP5GEA==; _hjSession_1658798=eyJpZCI6IjFjNTFhNzE4LWQ5NzgtNGU0MC1hZDhhLWE0ZmMwODdkM2NkMyIsImMiOjE3NDM1MjE1MzEyODAsInMiOjAsInIiOjAsInNiIjowLCJzciI6MCwic2UiOjAsImZzIjoxLCJzcCI6MX0=; _hjSessionUser_1658798=eyJpZCI6Ijg2MDNlNGQ5LWViMTMtNTdlYi1iZjhkLTNjODE3MTYwNmMxMCIsImNyZWF0ZWQiOjE3NDM1MjE1MzEyNzksImV4aXN0aW5nIjp0cnVlfQ==; authenticator=1-80de91f768e244794754edff56079fafe613d457-1-R8pCJZ1x7+Jet+PMWapTDcHOMprC/QI2pi1zIAvt9iMLXUJmbRJ539PfjMfXXqJY91Sv5jEyrI/nhaLslAmqrB4eS9MBwKs4q8KNSw5tuWQib5qm+kKt9SbL5g2H3oz/LS+1Abbndh6uOU8fWIWrKkt0SzC5Bxr+I2YEG4iZRTTtsDn1b1PTJM5xWhLIOnMmtJF1yLOOuG815Aj+UzguF2bOM4VgcvPgTYhcT7Is6iwio/RebJSmEtby/7/nrogF1kdljLY4egauRVdFQl8J/R108QuK8ROH9sZgzAGhBV2/rysxU1UMo4aPj5Ys2zdf1miCi3ejxZapW06Fh4a7oXeoFPVk2hpwm1cDVP6/08hmZ6IXB2dg54LasBJc3mFEJ6bTPDfRRvG6WZmVNwUa6mihN+5LikEa8KikReGODHG9xgemO1XNcKoUNFcYUEs4piTbwWmPh9LccGb30UqyQoPlt/X1cUi+4wolLql1SWq3KBaWUD0Mb486JiJcWIcNwLQfpH45wV4xqKsUKf/rn+5I6RaYn1OIGKg1OVUbl9XOKs/s6aBdjXUEPgZJP7bFNv4gWobp6Bke91eEv+4u4tD8TmdajqbAAAbjgRyz8msvjTEj9XwlTTqt4MO0241gAbxnhFIfRQ1yPBC0epVcP1HN8091GNs4EzNB2oN4a0phpEEHR5S2sGTCijexMD6TNNChpk8GXGOM1txUZbkBbl7Nzg==; _swb=229545da-8179-4d74-8cb0-58e3d15af6b2; _ketch_consent_v1_=eyJhbmFseXRpY3MiOnsic3RhdHVzIjoiZ3JhbnRlZCIsImNhbm9uaWNhbFB1cnBvc2VzIjpbImFuYWx5dGljcyJdfSwiZXNzZW50aWFsX3NlcnZpY2VzIjp7InN0YXR1cyI6ImdyYW50ZWQiLCJjYW5vbmljYWxQdXJwb3NlcyI6WyJlc3NlbnRpYWxfc2VydmljZXMiXX0sInRhcmdldGVkX2FkdmVydGlzaW5nIjp7InN0YXR1cyI6ImdyYW50ZWQiLCJjYW5vbmljYWxQdXJwb3NlcyI6WyJiZWhhdmlvcmFsX2FkdmVydGlzaW5nIl19fQ%3D%3D; _swb_consent_=eyJjb2xsZWN0ZWRBdCI6MTc0MzUyMTkxMywiZW52aXJvbm1lbnRDb2RlIjoicHJvZHVjdGlvbiIsImlkZW50aXRpZXMiOnsic3diX3dlYnNpdGVfc21hcnRfdGFnIjoiMjI5NTQ1ZGEtODE3OS00ZDc0LThjYjAtNThlM2QxNWFmNmIyIn0sImp1cmlzZGljdGlvbkNvZGUiOiJkZWZhdWx0IiwicHJvcGVydHlDb2RlIjoid2Vic2l0ZV9zbWFydF90YWciLCJwdXJwb3NlcyI6eyJhbmFseXRpY3MiOnsiYWxsb3dlZCI6InRydWUiLCJsZWdhbEJhc2lzQ29kZSI6ImRpc2Nsb3N1cmUifSwiZXNzZW50aWFsX3NlcnZpY2VzIjp7ImFsbG93ZWQiOiJ0cnVlIiwibGVnYWxCYXNpc0NvZGUiOiJkaXNjbG9zdXJlIn0sInRhcmdldGVkX2FkdmVydGlzaW5nIjp7ImFsbG93ZWQiOiJ0cnVlIiwibGVnYWxCYXNpc0NvZGUiOiJkaXNjbG9zdXJlIn19fQ%3D%3D; _ga_M10GRCGDXZ=GS1.1.1743519996.3.1.1743522473.0.0.0; _ga_G8YYJF3VNT=GS1.1.1743521529.1.1.1743522480.60.0.0; _ga_QBRYR4Y4HG=GS1.1.1743519996.3.1.1743522480.60.0.0; _uetsid=a4cd78100eba11f097d4315b088000e1; _uetvid=337655500d3b11f082b6cb0ae7b90198; _ga=GA1.2.293851551.1742992822; _ga_K3P5PSXTVT=GS1.1.1743520740.20.1.1743523199.7.0.0; _ga_8B9M9KJCT6=GS1.1.1743520740.24.1.1743523199.0.0.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user\": {\n        \"email\": \"{{email}}\",\n        \"password\": \"\",\n        \"lastName\": \"Test\",\n        \"firstName\": \"Abd\",\n        \"phone\": \"14254425252 \",\n        \"countryPhoneCode\": \"US\",\n        \"smsConsent\": false\n    },\n    \"address\": {\n        \"country\": \"US\",\n        \"addressLine1\": \"205 108th Ave NE\",\n        \"addressLine2\": \"\",\n        \"zip\": \"98004\",\n        \"city\": \"Bellevue\",\n        \"state\": \"WA\",\n        \"isShippable\": true\n    },\n    \"dateOfBirth\": \"1990-01-01\",\n    \"kitId\": \"{{kitId}}\",\n    \"gender\": \"Male\",\n    \"consentRecords\": [\n        {\n            \"systemId\": \"minor_okay\",\n            \"recordValue\": \"true\"\n        },\n        {\n            \"systemId\": \"minor_gi_screen1\",\n            \"recordValue\": \"confirm_parent_gardian\"\n        },\n        {\n            \"systemId\": \"minor_gi_screen1\",\n            \"recordValue\": \"agree_terms\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://testapp.viome.com/api/register/newKitForExistingUser",
+							"protocol": "https",
+							"host": [
+								"testapp",
+								"viome",
+								"com"
+							],
+							"path": [
+								"api",
+								"register",
+								"newKitForExistingUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "KitManagementlogin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// var status = pm.response.json().status;",
+									"// if (pm.response.code === 200 && status == 'VM_OK') {",
+									"//     pm.test(\"Status field validation : \" + status, function () {",
+									"//         pm.expect(status).to.equal('VM_OK');",
+									"//     });",
+									"",
+									"//     const resp = pm.response.json().data[0];",
+									"",
+									"//     var content = resp.choices[0].content;",
+									"//     pm.test(\"Content field validation : \" + content, function () {",
+									"//         pm.expect(content).to.be.a('string').and.to.be.exist",
+									"//     });",
+									"",
+									"//     var ordinal = resp.choices[0].ordinal;",
+									"//     pm.test(\"Ordinal field validation : \" + ordinal, function () {",
+									"//         pm.expect(ordinal).to.be.a('number').and.to.be.exist",
+									"//     });",
+									"",
+									"//     var recordValue = resp.choices[0].recordValue;",
+									"//     pm.test(\"RecordValue field validation : \" + recordValue, function () {",
+									"//         pm.expect(recordValue).to.be.a('string').and.to.be.exist",
+									"//     });",
+									"",
+									"//      var content = resp.content;",
+									"//     pm.test(\"Content field validation : \" + content, function () {",
+									"//         pm.expect(content).to.be.a('string').and.to.be.exist",
+									"//     });",
+									"",
+									"//     var header = resp.header;",
+									"//     pm.test(\"Header field validation : \" + header, function () {",
+									"//         pm.expect(header).to.be.a('string').and.to.be.exist",
+									"//     });",
+									"",
+									"//     var header = resp.header;",
+									"//     pm.test(\"Header field validation : \" + header, function () {",
+									"//         pm.expect(header).to.be.a('string').and.to.be.exist",
+									"//     });",
+									"",
+									"//     var id = resp.id;",
+									"//     pm.test(\"Id field validation : \" + id, function () {",
+									"//         pm.expect(id).to.be.a('number').and.to.be.exist",
+									"//     });",
+									"",
+									"//     var ordinal = resp.ordinal;",
+									"//     pm.test(\"Ordinal field validation : \" + ordinal, function () {",
+									"//         pm.expect(ordinal).to.be.a('number').and.to.be.exist",
+									"//     });",
+									"",
+									"//     var systemId = resp.systemId;",
+									"//     pm.test(\"SystemId field validation : \" + systemId, function () {",
+									"//         pm.expect(systemId).to.be.a('string').and.to.be.exist",
+									"//     });",
+									"",
+									"// } else {",
+									"//     pm.test(\"Status Error : \" + status, function () {",
+									"//         pm.expect.fail(\"\")",
+									"//     });",
+									"// }",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json; charset=UTF-8"
+							},
+							{
+								"key": "Origin",
+								"value": "https://testauth.viome.com"
+							},
+							{
+								"key": "Referer",
+								"value": "https://testauth.viome.com/login?scope=profile+email&client_id=93dca73c-6406-443e-8ead-e98c2d37519f&redirect_uri=https%3A%2F%2Ftest.viome.com%2Fapp%2Fauthenticate%2FViome&response_type=code&state=1-eebd42c13b5bbaf5a7e32d0fbaa1548c160b9c55-Y3NyZi1zdGF0ZQ%3D%3D-eyJ0b2tlbiI6ImQyNzJjMTRmN2YxYjI2OWUyMTU2OTZkYWEzZTY2MDZhYWY2NTA1MDBjZTNjMjM4MzY4YzgxODhkMmFlMzAxMGUxYTA0M2ExZmNiZGM1ODQ5MDkyYzg4YzVkNmNmYmUwMTY0MjIxY2EyMjU2MjJlOGUzMTQzZjIzMGY3NWUzNTQwZjJmMzViYjFjNmI0NzMzNTk1MTExYjE3MjUyYjFmY2YzYzQ1MmQxMDU3Y2Y5NGE4ZGMyNTFhMmJmMTcwZjIyNTA5YjA3YzM4Y2ZjMTgzMGQ3YmI5MTNiOWFjYzEyNGNiMTJiZWU1MDBmMjM1NTZjZDljOGJjZDA0NTI1MmZjY2EifQ%3D%3D"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "X-Requested-With",
+								"value": "XMLHttpRequest"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "Cookie",
+								"value": "_gid=GA1.2.1288376993.1743320836; _gcl_au=1.1.1401147094.1743320837; _fbp=fb.1.1743320836610.786644735345975741; _uetsid=337675800d3b11f0b5fc13a69370a323; _uetvid=337655500d3b11f082b6cb0ae7b90198; _ga=GA1.2.293851551.1742992822; _ga_8B9M9KJCT6=GS1.1.1743318839.21.1.1743323259.0.0.0; _ga_K3P5PSXTVT=GS1.1.1743318840.17.1.1743323259.57.0.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"internal@viome.com\",\n    \"password\": \"test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://testauth.viome.com/login?scope=profile+email&client_id=93dca73c-6406-443e-8ead-e98c2d37519f&redirect_uri=https%3A%2F%2Ftest.viome.com%2Fapp%2Fauthenticate%2FViome&response_type=code&state=1-eebd42c13b5bbaf5a7e32d0fbaa1548c160b9c55-Y3NyZi1zdGF0ZQ%3D%3D-eyJ0b2tlbiI6ImQyNzJjMTRmN2YxYjI2OWUyMTU2OTZkYWEzZTY2MDZhYWY2NTA1MDBjZTNjMjM4MzY4YzgxODhkMmFlMzAxMGUxYTA0M2ExZmNiZGM1ODQ5MDkyYzg4YzVkNmNmYmUwMTY0MjIxY2EyMjU2MjJlOGUzMTQzZjIzMGY3NWUzNTQwZjJmMzViYjFjNmI0NzMzNTk1MTExYjE3MjUyYjFmY2YzYzQ1MmQxMDU3Y2Y5NGE4ZGMyNTFhMmJmMTcwZjIyNTA5YjA3YzM4Y2ZjMTgzMGQ3YmI5MTNiOWFjYzEyNGNiMTJiZWU1MDBmMjM1NTZjZDljOGJjZDA0NTI1MmZjY2EifQ%3D%3D",
+							"protocol": "https",
+							"host": [
+								"testauth",
+								"viome",
+								"com"
+							],
+							"path": [
+								"login"
+							],
+							"query": [
+								{
+									"key": "scope",
+									"value": "profile+email"
+								},
+								{
+									"key": "client_id",
+									"value": "93dca73c-6406-443e-8ead-e98c2d37519f"
+								},
+								{
+									"key": "redirect_uri",
+									"value": "https%3A%2F%2Ftest.viome.com%2Fapp%2Fauthenticate%2FViome"
+								},
+								{
+									"key": "response_type",
+									"value": "code"
+								},
+								{
+									"key": "state",
+									"value": "1-eebd42c13b5bbaf5a7e32d0fbaa1548c160b9c55-Y3NyZi1zdGF0ZQ%3D%3D-eyJ0b2tlbiI6ImQyNzJjMTRmN2YxYjI2OWUyMTU2OTZkYWEzZTY2MDZhYWY2NTA1MDBjZTNjMjM4MzY4YzgxODhkMmFlMzAxMGUxYTA0M2ExZmNiZGM1ODQ5MDkyYzg4YzVkNmNmYmUwMTY0MjIxY2EyMjU2MjJlOGUzMTQzZjIzMGY3NWUzNTQwZjJmMzViYjFjNmI0NzMzNTk1MTExYjE3MjUyYjFmY2YzYzQ1MmQxMDU3Y2Y5NGE4ZGMyNTFhMmJmMTcwZjIyNTA5YjA3YzM4Y2ZjMTgzMGQ3YmI5MTNiOWFjYzEyNGNiMTJiZWU1MDBmMjM1NTZjZDljOGJjZDA0NTI1MmZjY2EifQ%3D%3D"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "kitSearchByid",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// var status = pm.response.json().status;",
+									"// if (pm.response.code === 200 && status == 'VM_OK') {",
+									"//     pm.test(\"Status field validation : \" + status, function () {",
+									"//         pm.expect(status).to.equal('VM_OK');",
+									"//     });",
+									"",
+									"//     const resp = pm.response.json().data[0];",
+									"",
+									"//     var content = resp.choices[0].content;",
+									"//     pm.test(\"Content field validation : \" + content, function () {",
+									"//         pm.expect(content).to.be.a('string').and.to.be.exist",
+									"//     });",
+									"",
+									"//     var ordinal = resp.choices[0].ordinal;",
+									"//     pm.test(\"Ordinal field validation : \" + ordinal, function () {",
+									"//         pm.expect(ordinal).to.be.a('number').and.to.be.exist",
+									"//     });",
+									"",
+									"//     var recordValue = resp.choices[0].recordValue;",
+									"//     pm.test(\"RecordValue field validation : \" + recordValue, function () {",
+									"//         pm.expect(recordValue).to.be.a('string').and.to.be.exist",
+									"//     });",
+									"",
+									"//      var content = resp.content;",
+									"//     pm.test(\"Content field validation : \" + content, function () {",
+									"//         pm.expect(content).to.be.a('string').and.to.be.exist",
+									"//     });",
+									"",
+									"//     var header = resp.header;",
+									"//     pm.test(\"Header field validation : \" + header, function () {",
+									"//         pm.expect(header).to.be.a('string').and.to.be.exist",
+									"//     });",
+									"",
+									"//     var header = resp.header;",
+									"//     pm.test(\"Header field validation : \" + header, function () {",
+									"//         pm.expect(header).to.be.a('string').and.to.be.exist",
+									"//     });",
+									"",
+									"//     var id = resp.id;",
+									"//     pm.test(\"Id field validation : \" + id, function () {",
+									"//         pm.expect(id).to.be.a('number').and.to.be.exist",
+									"//     });",
+									"",
+									"//     var ordinal = resp.ordinal;",
+									"//     pm.test(\"Ordinal field validation : \" + ordinal, function () {",
+									"//         pm.expect(ordinal).to.be.a('number').and.to.be.exist",
+									"//     });",
+									"",
+									"//     var systemId = resp.systemId;",
+									"//     pm.test(\"SystemId field validation : \" + systemId, function () {",
+									"//         pm.expect(systemId).to.be.a('string').and.to.be.exist",
+									"//     });",
+									"",
+									"// } else {",
+									"//     pm.test(\"Status Error : \" + status, function () {",
+									"//         pm.expect.fail(\"\")",
+									"//     });",
+									"// }",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Origin",
+								"value": "https://internal-tools-test.viome.com"
+							},
+							{
+								"key": "Referer",
+								"value": "https://internal-tools-test.viome.com/"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-site"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							}
+						],
+						"url": {
+							"raw": "https://test.viome.com/app/dashboard/csw/kit/search?q={{kitId}}&sortField=kitCreatedDate&sortDirection=desc&page=0&pageSize=50",
+							"protocol": "https",
+							"host": [
+								"test",
+								"viome",
+								"com"
+							],
+							"path": [
+								"app",
+								"dashboard",
+								"csw",
+								"kit",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "{{kitId}}"
+								},
+								{
+									"key": "sortField",
+									"value": "kitCreatedDate"
+								},
+								{
+									"key": "sortDirection",
+									"value": "desc"
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "50"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "unregister",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"if (pm.response.code === 200) {",
+									"",
+									"",
+									"    const resp = pm.response.json();",
+									"",
+									"    var result = resp.result;",
+									"    pm.test(\"Result field validation : \" + result, function () {",
+									"        pm.expect(result).to.equal('success');",
+									"    });",
+									"",
+									"} else {",
+									"    pm.test(\"Result Error : \", function () {",
+									"        pm.expect.fail(\"\")",
+									"    });",
+									"}",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "Origin",
+								"value": "https://internal-tools-test.viome.com"
+							},
+							{
+								"key": "Referer",
+								"value": "https://internal-tools-test.viome.com/"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-site"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "Cookie",
+								"value": "IstioOAuth2State=\"33238cd3f6d6d443\"; IstioOAuth2State=\"9bf00499ecd542e2\"; _gcl_au=1.1.1401147094.1743320837; _fbp=fb.1.1743320836610.786644735345975741; _gid=GA1.2.1382941422.1743485523; _hjSession_1658798=eyJpZCI6IjFjNTFhNzE4LWQ5NzgtNGU0MC1hZDhhLWE0ZmMwODdkM2NkMyIsImMiOjE3NDM1MjE1MzEyODAsInMiOjAsInIiOjAsInNiIjowLCJzciI6MCwic2UiOjAsImZzIjoxLCJzcCI6MX0=; _hjSessionUser_1658798=eyJpZCI6Ijg2MDNlNGQ5LWViMTMtNTdlYi1iZjhkLTNjODE3MTYwNmMxMCIsImNyZWF0ZWQiOjE3NDM1MjE1MzEyNzksImV4aXN0aW5nIjp0cnVlfQ==; _swb=229545da-8179-4d74-8cb0-58e3d15af6b2; _ketch_consent_v1_=eyJhbmFseXRpY3MiOnsic3RhdHVzIjoiZ3JhbnRlZCIsImNhbm9uaWNhbFB1cnBvc2VzIjpbImFuYWx5dGljcyJdfSwiZXNzZW50aWFsX3NlcnZpY2VzIjp7InN0YXR1cyI6ImdyYW50ZWQiLCJjYW5vbmljYWxQdXJwb3NlcyI6WyJlc3NlbnRpYWxfc2VydmljZXMiXX0sInRhcmdldGVkX2FkdmVydGlzaW5nIjp7InN0YXR1cyI6ImdyYW50ZWQiLCJjYW5vbmljYWxQdXJwb3NlcyI6WyJiZWhhdmlvcmFsX2FkdmVydGlzaW5nIl19fQ%3D%3D; _swb_consent_=eyJjb2xsZWN0ZWRBdCI6MTc0MzUyMTkxMywiZW52aXJvbm1lbnRDb2RlIjoicHJvZHVjdGlvbiIsImlkZW50aXRpZXMiOnsic3diX3dlYnNpdGVfc21hcnRfdGFnIjoiMjI5NTQ1ZGEtODE3OS00ZDc0LThjYjAtNThlM2QxNWFmNmIyIn0sImp1cmlzZGljdGlvbkNvZGUiOiJkZWZhdWx0IiwicHJvcGVydHlDb2RlIjoid2Vic2l0ZV9zbWFydF90YWciLCJwdXJwb3NlcyI6eyJhbmFseXRpY3MiOnsiYWxsb3dlZCI6InRydWUiLCJsZWdhbEJhc2lzQ29kZSI6ImRpc2Nsb3N1cmUifSwiZXNzZW50aWFsX3NlcnZpY2VzIjp7ImFsbG93ZWQiOiJ0cnVlIiwibGVnYWxCYXNpc0NvZGUiOiJkaXNjbG9zdXJlIn0sInRhcmdldGVkX2FkdmVydGlzaW5nIjp7ImFsbG93ZWQiOiJ0cnVlIiwibGVnYWxCYXNpc0NvZGUiOiJkaXNjbG9zdXJlIn19fQ%3D%3D; _ga_M10GRCGDXZ=GS1.1.1743519996.3.1.1743522473.0.0.0; _ga_G8YYJF3VNT=GS1.1.1743521529.1.1.1743522480.60.0.0; _ga_QBRYR4Y4HG=GS1.1.1743519996.3.1.1743522480.60.0.0; _uetsid=a4cd78100eba11f097d4315b088000e1; _uetvid=337655500d3b11f082b6cb0ae7b90198; _ga=GA1.2.293851551.1742992822; _ga_8B9M9KJCT6=GS1.1.1743520740.24.1.1743523267.0.0.0; _ga_K3P5PSXTVT=GS1.1.1743520740.20.1.1743523267.57.0.0; authenticator=1-f5e29eb036a94f0fd197f4ceaeac8282ba192f74-1-oPmRK9sBOu1JjRnvUxZJVHo9NHdM/3Vxb9RZK0xmiQlniuoEp7ClgFQtd+H1MGLCJkNy5UIjr0p5CulrbSXUXlivBiah/5gp8Q54XUDk/F3saDEdRD+gQ/pNlfZDuVMC4A+VGXz7eGqyGNtrD6Gz5ld9jTkBtc+5HkRY+T2t+Cv8+KVH02J2IaszguJoXCfW4wHhAL1u00ei1Fbyo8p1TQI+8htIUI9PStoSLw+aFY9HHq1tCwVED9skkmiFKn4XbF0vsCiO5tiNg+5GWIp39LC80ZX5E+mAtR3+pHA2th9uFzUVJiB/v1MBveaS84/0IOJCVqbNTlPBaqSsJqvLjPejTHucHKQhv7KhxRmPqAWpvRcC1V6oKRVOzuHb6rXjmXZxnGPiGd4Ezq11uIe+9guTKWSxZqD0bBsY8F93vX1wvU+bFFYd0YcawqY6WOeg12z1CM4gB5ld+01QFeXMT5rmfjQRPK11SoZPe9uwJTYQtlakQ8nPCQDEn79vCIGIKxpMZYDTd8FRXIsWZcbNSHDt1ieP58o530bqzoUzNxma4KUdGRi4zqDCjbdyl3138fo6DVEy0ZXBp1TVcc1xK7cg0k2CQY1tR54P6pO5tqsUYJhUoTzwk4m/YSAA50sXGpZP8cL72vhxx/6w8uiC8M+YVDYV1yg+jKLo0gO1mQN7xA43QEHC/xurgzyf5mQu3fOalvizZnYastKWhyX2oyW77Q=="
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"note\":\"Test\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://test.viome.com/app/dashboard/csw/kit/{{kitId}}/unregister",
+							"protocol": "https",
+							"host": [
+								"test",
+								"viome",
+								"com"
+							],
+							"path": [
+								"app",
+								"dashboard",
+								"csw",
+								"kit",
+								"{{kitId}}",
+								"unregister"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "guestUser",
+			"item": [
+				{
+					"name": "registerKitByBarcode",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var status = pm.response.json().status;",
+									"if (pm.response.code === 200 && status == 'VM_OK') {",
+									"",
+									"    pm.test(\"Status field validation : \"+status, function () {",
+									"        pm.expect(status).to.equal('VM_OK');",
+									"    });",
+									"",
+									"    const resp = pm.response.json().data;",
+									"",
+									"    var kitType = resp.kit.kitType;",
+									"    pm.test(\"KitType field validation : \"+kitType, function () {",
+									"        pm.expect(kitType).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var orderId = resp.kit.orderId;",
+									"    pm.test(\"OrderId field validation : \"+orderId, function () {",
+									"        pm.expect(orderId).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var kitId = resp.kitId;",
+									"    pm.test(\"kitId field validation : \"+kitId, function () {",
+									"        pm.expect(kitId).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var kitId = resp.tests;",
+									"    kitId.forEach(test => {",
+									"        pm.test(\"TestId field validation : \"+test.id, function () {",
+									"            pm.expect(test.id).to.be.a('number').and.to.be.exist",
+									"        });",
+									"",
+									"        pm.test(\"TestType field validation : \"+test.testType, function () {",
+									"            pm.expect(test.testType).to.be.a('string').and.to.be.exist",
+									"        });",
+									"    })",
+									"",
+									"",
+									"",
+									"} else {",
+									"    pm.test(\"Status Error : \" + status, function () {",
+									"        pm.expect.fail(\"\")",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Referer",
+								"value": "https://testapp.viome.com/registration/kit-id"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "x-platform",
+								"value": "Web"
+							},
+							{
+								"key": "x-version",
+								"value": "7.1.0"
+							},
+							{
+								"key": "Cookie",
+								"value": "_gid=GA1.2.1288376993.1743320836; _gcl_au=1.1.1401147094.1743320837; _fbp=fb.1.1743320836610.786644735345975741; _uetsid=337675800d3b11f0b5fc13a69370a323; _uetvid=337655500d3b11f082b6cb0ae7b90198; _ga=GA1.2.293851551.1742992822; _ga_K3P5PSXTVT=GS1.1.1743318840.17.1.1743327374.60.0.0; _gat_G-8B9M9KJCT6=1; _ga_8B9M9KJCT6=GS1.1.1743318839.21.1.1743327374.0.0.0"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/register/kit/byBarcode/{{kitId}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"register",
+								"kit",
+								"byBarcode",
+								"{{kitId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "validateEmailWithKit",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var status = pm.response.json().status;",
+									"if (pm.response.code === 200 && status == 'VM_OK') {",
+									"    pm.test(\"Status field validation : \" + status, function () {",
+									"        pm.expect(status).to.equal('VM_OK');",
+									"    });",
+									"",
+									"    const resp = pm.response.json().data;",
+									"",
+									"    var errorCode = resp.errorCode;",
+									"    pm.test(\"ErrorCode field validation : \" + errorCode, function () {",
+									"        pm.expect(errorCode).to.equal(null);",
+									"    });",
+									"",
+									"    var valid = resp.valid;",
+									"    pm.test(\"Valid field validation : \" + valid, function () {",
+									"        pm.expect(valid).to.be.a('boolean').and.to.be.exist",
+									"    });",
+									"",
+									"",
+									"} else {",
+									"    pm.test(\"Status Error : \" + status, function () {",
+									"        pm.expect.fail(\"\")",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "https://testapp.viome.com"
+							},
+							{
+								"key": "Referer",
+								"value": "https://testapp.viome.com/registration/account-creation?kit-id=K000-0000-0256"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "x-platform",
+								"value": "Web"
+							},
+							{
+								"key": "x-version",
+								"value": "7.1.0"
+							},
+							{
+								"key": "Cookie",
+								"value": "_gid=GA1.2.1288376993.1743320836; _gcl_au=1.1.1401147094.1743320837; _fbp=fb.1.1743320836610.786644735345975741; _uetsid=337675800d3b11f0b5fc13a69370a323; _uetvid=337655500d3b11f082b6cb0ae7b90198; _ga=GA1.2.293851551.1742992822; authenticator=1-db074c407792fd9d1e6df5d0e8e9b80b85f6c8bd-1-eqZkj9zUpeJBUZGGaKcx3newJmr3gQQFMxR/OKIJfr2+r9w68Ld5oadTM3I+N9Zuhf/nSMPPRRlP2qmv7sM+RvHZRoLUkzpYyNbP2/0z/9Xo2MJ/WJehW/L47t02oHZWrks3oDIKgjxbihF+0wiQ+6idW0niBdUGFZ8lnY8MR2i49oBNzOEeU1wsRm2Et5Twmq+n7Xf1q1YTBJalS7h7TG5KN6d5G2/SmsnGD1xffqlpamqkifkRUlUpc/vjaQ9JDKpdArDXwQktUu6URnbTw3CDf5tGDEXbgWdJc8diJJzdnHyoOWpdLazlMAcBog6eE4mlVm2QMEXz7pxbl45hSQQqAnnQBka0eCpfPoaksXcmH2hhBgj8x19kpOfVP6oBtLRc9haeSsbuW8N8Hk8je2/beuDID+5Qb4ri+f2M2LuYtiRqf+dRj19lwNdXcwEpP2Xwh2/s4IXTX4NbjdtGgAX7RrVy4xHR4P6okO3UP2L2Bvspjd8UwAgBs+swV2wOEf7nXSmm2JSMxVn0lGTMM8+fkLwigZXfyKxirTVkSOFEHQXmQ66YxNemB/xyeRPGMxr5FjPgt7DjWbH7CmAXg+o223UfSy32ZONhJK+hfEmUWnZK4+BQUlnd0v2fZ+ZevD2Mzomkko2e5MWUuZj7RjeaksrzSsRGvrggTWtaZdTdkcWl0WDO6z9a/dtklPxbQ6lZ1i+P5tm1PWpOenrUZKTt6g==; _gat_G-8B9M9KJCT6=1; _ga_K3P5PSXTVT=GS1.1.1743333107.18.1.1743333659.54.0.0; _ga_8B9M9KJCT6=GS1.1.1743333107.22.1.1743333659.0.0.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"vt.su.user+automationTest1@gmail.com\",\n    \"kitId\": \"{{kitId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://testapp.viome.com/api/register/validateEmailWithKit",
+							"protocol": "https",
+							"host": [
+								"testapp",
+								"viome",
+								"com"
+							],
+							"path": [
+								"api",
+								"register",
+								"validateEmailWithKit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "validateAddress",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var status = pm.response.json().status;",
+									"if (pm.response.code === 200 && status == 'VM_OK') {",
+									"    pm.test(\"Status field validation : \" + status, function () {",
+									"        pm.expect(status).to.equal('VM_OK');",
+									"    });",
+									"",
+									"    const addressLine1 = pm.response.json().data.address.addressLine1;",
+									"    pm.test(\"Address: addressLine1 field validation : \" + addressLine1, function () {",
+									"        pm.expect(addressLine1).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    const city = pm.response.json().data.address.city;",
+									"    pm.test(\"Address: city field validation : \" + city, function () {",
+									"        pm.expect(city).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    const country = pm.response.json().data.address.country;",
+									"    pm.test(\"Address: country field validation : \" + country, function () {",
+									"        pm.expect(country).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    const geoLatitude = pm.response.json().data.address.geoLatitude;",
+									"    pm.test(\"Address: geoLatitude field validation : \" + country, function () {",
+									"        pm.expect(geoLatitude).to.be.a('number').and.to.be.exist",
+									"    });",
+									"",
+									"    const geoLongitude = pm.response.json().data.address.geoLongitude;",
+									"    pm.test(\"Address: geoLongitude field validation : \" + country, function () {",
+									"        pm.expect(geoLongitude).to.be.a('number').and.to.be.exist",
+									"    });",
+									"",
+									"    const state = pm.response.json().data.address.state;",
+									"    pm.test(\"Address: state field validation : \" + state, function () {",
+									"        pm.expect(state).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    const zip = pm.response.json().data.address.zip;",
+									"    pm.test(\"Address: zip field validation : \" + zip, function () {",
+									"        pm.expect(zip).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"} else {",
+									"    pm.test(\"Status Error : \" + status, function () {",
+									"        pm.expect.fail(\"\")",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "https://testapp.viome.com"
+							},
+							{
+								"key": "Referer",
+								"value": "https://testapp.viome.com/registration/contact-information"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "x-platform",
+								"value": "Web"
+							},
+							{
+								"key": "x-version",
+								"value": "7.1.0"
+							},
+							{
+								"key": "Cookie",
+								"value": "_gid=GA1.2.1288376993.1743320836; _gcl_au=1.1.1401147094.1743320837; _fbp=fb.1.1743320836610.786644735345975741; _uetsid=337675800d3b11f0b5fc13a69370a323; _uetvid=337655500d3b11f082b6cb0ae7b90198; _ga=GA1.2.293851551.1742992822; _ga_K3P5PSXTVT=GS1.1.1743318840.17.1.1743328365.3.0.0; _ga_8B9M9KJCT6=GS1.1.1743318839.21.1.1743328365.0.0.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"country\": \"US\",\n    \"addressLine1\": \"108TH AVE NE\",\n    \"addressLine2\": \"205\",\n    \"zip\": \"98004\",\n    \"city\": \"Bellevue \",\n    \"state\": \"WA\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://testapp.viome.com/api/register/validateAddress",
+							"protocol": "https",
+							"host": [
+								"testapp",
+								"viome",
+								"com"
+							],
+							"path": [
+								"api",
+								"register",
+								"validateAddress"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "validateGeoAndAgeForKit",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var status = pm.response.json().status;",
+									"if (pm.response.code === 200 && status == 'VM_OK') {",
+									"    pm.test(\"Status field validation : \" + status, function () {",
+									"        pm.expect(status).to.equal('VM_OK');",
+									"    });",
+									"",
+									"    const resp = pm.response.json().data;",
+									"",
+									"    var registrationAllowed = resp.registrationAllowed;",
+									"    pm.test(\"RegistrationAllowed field validation : \" + registrationAllowed, function () {",
+									"        pm.expect(registrationAllowed).to.be.a('boolean').and.to.be.exist",
+									"    });",
+									"",
+									"    if (registrationAllowed) {",
+									"        var testTypes = resp.testTypes;",
+									"        testTypes.forEach(test => {",
+									"            pm.test(\"test field validation : \" + test, function () {",
+									"                pm.expect(registrationAllowed).to.be.a('boolean').and.to.be.exist",
+									"            });",
+									"        })",
+									"    } else {",
+									"        var uiMessage = resp.uiMessage;",
+									"        if (uiMessage.length > 0) {",
+									"            uiMessageData = uiMessage[0]",
+									"            var bodyText = uiMessageData.bodyText;",
+									"            pm.test(\"bodyText field validation : \" + bodyText, function () {",
+									"                pm.expect(bodyText).to.be.a('string').and.to.be.exist",
+									"            });",
+									"",
+									"            var bodyText = uiMessageData.bodyText;",
+									"            pm.test(\"bodyText field validation : \" + bodyText, function () {",
+									"                pm.expect(bodyText).to.be.a('string').and.to.be.exist",
+									"            });",
+									"",
+									"            var headerText = uiMessageData.headerText;",
+									"            pm.test(\"headerText field validation : \" + headerText, function () {",
+									"                pm.expect(headerText).to.be.a('string').and.to.be.exist",
+									"            });",
+									"",
+									"            var internalName = uiMessageData.internalName;",
+									"            pm.test(\"internalName field validation : \" + internalName, function () {",
+									"                pm.expect(internalName).to.be.a('string').and.to.be.exist",
+									"            });",
+									"        }",
+									"    }",
+									"",
+									"} else {",
+									"    pm.test(\"Status Error : \" + status, function () {",
+									"        pm.expect.fail(\"\")",
+									"    });",
+									"}",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "https://testapp.viome.com"
+							},
+							{
+								"key": "Referer",
+								"value": "https://testapp.viome.com/registration/confirmation"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "x-platform",
+								"value": "Web"
+							},
+							{
+								"key": "x-version",
+								"value": "7.1.0"
+							},
+							{
+								"key": "Cookie",
+								"value": "_gid=GA1.2.1288376993.1743320836; _gcl_au=1.1.1401147094.1743320837; _fbp=fb.1.1743320836610.786644735345975741; _uetsid=337675800d3b11f0b5fc13a69370a323; _uetvid=337655500d3b11f082b6cb0ae7b90198; _ga=GA1.2.293851551.1742992822; _gat_G-8B9M9KJCT6=1; _ga_K3P5PSXTVT=GS1.1.1743318840.17.1.1743328456.14.0.0; _ga_8B9M9KJCT6=GS1.1.1743318839.21.1.1743328456.0.0.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"kitId\": \"{{kitId}}\",\n    \"address\": {\n        \"addressLine1\": \"108TH AVE NE #205\",\n        \"addressLine2\": \"\",\n        \"city\": \"BELLEVUE\",\n        \"country\": \"US\",\n        \"state\": \"WA\",\n        \"zip\": \"98004\",\n        \"isShippable\": false\n    },\n    \"dateOfBirth\": \"1990-03-13\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://testapp.viome.com/api/register/validateGeoAndAgeForKit",
+							"protocol": "https",
+							"host": [
+								"testapp",
+								"viome",
+								"com"
+							],
+							"path": [
+								"api",
+								"register",
+								"validateGeoAndAgeForKit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getConsentForms",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var status = pm.response.json().status;",
+									"if (pm.response.code === 200 && status == 'VM_OK') {",
+									"    pm.test(\"Status field validation : \" + status, function () {",
+									"        pm.expect(status).to.equal('VM_OK');",
+									"    });",
+									"",
+									"    const resp = pm.response.json().data[0];",
+									"",
+									"    var content = resp.choices[0].content;",
+									"    pm.test(\"Content field validation : \" + content, function () {",
+									"        pm.expect(content).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var ordinal = resp.choices[0].ordinal;",
+									"    pm.test(\"Ordinal field validation : \" + ordinal, function () {",
+									"        pm.expect(ordinal).to.be.a('number').and.to.be.exist",
+									"    });",
+									"",
+									"    var recordValue = resp.choices[0].recordValue;",
+									"    pm.test(\"RecordValue field validation : \" + recordValue, function () {",
+									"        pm.expect(recordValue).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"     var content = resp.content;",
+									"    pm.test(\"Content field validation : \" + content, function () {",
+									"        pm.expect(content).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var header = resp.header;",
+									"    pm.test(\"Header field validation : \" + header, function () {",
+									"        pm.expect(header).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var header = resp.header;",
+									"    pm.test(\"Header field validation : \" + header, function () {",
+									"        pm.expect(header).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"    var id = resp.id;",
+									"    pm.test(\"Id field validation : \" + id, function () {",
+									"        pm.expect(id).to.be.a('number').and.to.be.exist",
+									"    });",
+									"",
+									"    var ordinal = resp.ordinal;",
+									"    pm.test(\"Ordinal field validation : \" + ordinal, function () {",
+									"        pm.expect(ordinal).to.be.a('number').and.to.be.exist",
+									"    });",
+									"",
+									"    var systemId = resp.systemId;",
+									"    pm.test(\"SystemId field validation : \" + systemId, function () {",
+									"        pm.expect(systemId).to.be.a('string').and.to.be.exist",
+									"    });",
+									"",
+									"} else {",
+									"    pm.test(\"Status Error : \" + status, function () {",
+									"        pm.expect.fail(\"\")",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "https://testapp.viome.com"
+							},
+							{
+								"key": "Referer",
+								"value": "https://testapp.viome.com/registration/confirmation"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "x-platform",
+								"value": "Web"
+							},
+							{
+								"key": "x-version",
+								"value": "7.1.0"
+							},
+							{
+								"key": "Cookie",
+								"value": "_gid=GA1.2.1288376993.1743320836; _gcl_au=1.1.1401147094.1743320837; _fbp=fb.1.1743320836610.786644735345975741; _uetsid=337675800d3b11f0b5fc13a69370a323; _uetvid=337655500d3b11f082b6cb0ae7b90198; _ga=GA1.2.293851551.1742992822; _gat_G-8B9M9KJCT6=1; _ga_K3P5PSXTVT=GS1.1.1743318840.17.1.1743328456.14.0.0; _ga_8B9M9KJCT6=GS1.1.1743318839.21.1.1743328456.0.0.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"countryCode\": \"US\",\n    \"dateOfBirth\": \"1990-03-13\",\n    \"kitId\": \"{{kitId}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://testapp.viome.com/api/register/getConsentForms",
+							"protocol": "https",
+							"host": [
+								"testapp",
+								"viome",
+								"com"
+							],
+							"path": [
+								"api",
+								"register",
+								"getConsentForms"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "registerNewKit",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var status = pm.response.json().status;",
+									"if (pm.response.code === 200 && status == 'VM_OK') {",
+									"    pm.test(\"Status field validation : \" + status, function () {",
+									"        pm.expect(status).to.equal('VM_OK');",
+									"    });",
+									"",
+									"    const resp = pm.response.json().data;",
+									"",
+									"    var registrationAllowed = resp.registrationAllowed;",
+									"    pm.test(\"RegistrationAllowed field validation : \" + registrationAllowed, function () {",
+									"        pm.expect(registrationAllowed).to.be.a('boolean').and.to.be.exist",
+									"    });",
+									"",
+									"    if (registrationAllowed) {",
+									"        var testTypes = resp.testTypes;",
+									"        testTypes.forEach(test => {",
+									"            pm.test(\"test field validation : \" + test, function () {",
+									"                pm.expect(registrationAllowed).to.be.a('boolean').and.to.be.exist",
+									"            });",
+									"        })",
+									"    } else {",
+									"        var uiMessage = resp.uiMessage;",
+									"        if (uiMessage.length > 0) {",
+									"            uiMessageData = uiMessage[0]",
+									"            var bodyText = uiMessageData.bodyText;",
+									"            pm.test(\"bodyText field validation : \" + bodyText, function () {",
+									"                pm.expect(bodyText).to.be.a('string').and.to.be.exist",
+									"            });",
+									"",
+									"            var bodyText = uiMessageData.bodyText;",
+									"            pm.test(\"bodyText field validation : \" + bodyText, function () {",
+									"                pm.expect(bodyText).to.be.a('string').and.to.be.exist",
+									"            });",
+									"",
+									"            var headerText = uiMessageData.headerText;",
+									"            pm.test(\"headerText field validation : \" + headerText, function () {",
+									"                pm.expect(headerText).to.be.a('string').and.to.be.exist",
+									"            });",
+									"",
+									"            var internalName = uiMessageData.internalName;",
+									"            pm.test(\"internalName field validation : \" + internalName, function () {",
+									"                pm.expect(internalName).to.be.a('string').and.to.be.exist",
+									"            });",
+									"        }",
+									"    }",
+									"",
+									"} else {",
+									"    pm.test(\"Status Error : \" + status, function () {",
+									"        pm.expect.fail(\"\")",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Origin",
+								"value": "https://testapp.viome.com"
+							},
+							{
+								"key": "Referer",
+								"value": "https://testapp.viome.com/registration/terms-of-service"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "x-platform",
+								"value": "Web"
+							},
+							{
+								"key": "x-version",
+								"value": "7.1.0"
+							},
+							{
+								"key": "Cookie",
+								"value": "_ga_K3P5PSXTVT=GS1.1.1742807164.8.0.1742808853.60.0.0; _gid=GA1.2.631003659.1742992822; _gcl_au=1.1.2032392666.1742992823; _fbp=fb.1.1742992823641.411820881369518236; _ga=GA1.2.293851551.1742992822; _uetsid=7c497f300a3f11f093eb6b34177c1940; _uetvid=7c4997300a3f11f0beb9ef811bfb957c; _ga_QBRYR4Y4HG=GS1.1.1743083241.9.1.1743083266.35.0.0; _ga_M10GRCGDXZ=GS1.1.1743083241.5.1.1743083266.0.0.0; _ga_K3P5PSXTVT=GS1.1.1743090700.14.1.1743095139.11.0.0; _ga_8B9M9KJCT6=GS1.1.1743090700.18.1.1743095139.0.0.0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user\": {\n        \"email\": \"{{email}}\",\n        \"password\": \"Viome11*\",\n        \"lastName\": \"User\",\n        \"firstName\": \"Release Test\",\n        \"phone\": \"14545254425\",\n        \"countryPhoneCode\": \"US\",\n        \"smsConsent\": false\n    },\n    \"address\": {\n        \"country\": \"US\",\n        \"addressLine1\": \"105th Ave NE\",\n        \"addressLine2\": \"205\",\n        \"zip\": \"98004\",\n        \"city\": \"Bellevue\",\n        \"state\": \"WA\",\n        \"isShippable\": false\n    },\n    \"dateOfBirth\": \"1990-06-08\",\n    \"kitId\": \"{{kitId}}\",\n    \"gender\": \"Male\",\n    \"consentRecords\": [\n        {\n            \"systemId\": \"adult_fbi_screen1\",\n            \"recordValue\": \"true\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/register/newKit",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"register",
+								"newKit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "unregister",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json, text/plain, */*"
+							},
+							{
+								"key": "Accept-Language",
+								"value": "en-GB,en-US;q=0.9,en;q=0.8"
+							},
+							{
+								"key": "Connection",
+								"value": "keep-alive"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json;charset=UTF-8"
+							},
+							{
+								"key": "Origin",
+								"value": "https://internal-tools-test.viome.com"
+							},
+							{
+								"key": "Referer",
+								"value": "https://internal-tools-test.viome.com/"
+							},
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "empty"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "cors"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-site"
+							},
+							{
+								"key": "User-Agent",
+								"value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+							},
+							{
+								"key": "sec-ch-ua",
+								"value": "\"Chromium\";v=\"134\", \"Not:A-Brand\";v=\"24\", \"Google Chrome\";v=\"134\""
+							},
+							{
+								"key": "sec-ch-ua-mobile",
+								"value": "?0"
+							},
+							{
+								"key": "sec-ch-ua-platform",
+								"value": "\"macOS\""
+							},
+							{
+								"key": "Cookie",
+								"value": "IstioOAuth2State=\"30cc450e1405b928\"; authenticator=1-26b764e9ff0d645280fd0cb62ef7a8840528f380-1-gHUMMN4MAluOWVf00xQLoDNhuzVsJJJLWmIDt9sQ1VGoiaCiaUHjIDeLqwE1qb7eKPsZPJuVh7AEdO47nysapeCwTuuT3uqGQzPLOJbItph1dWNl96604Bdcsx70kMHZj9aCyvHX9mdD8ilCyr2LV8D9Sqr/PthgxjO23mETalSdtKQr8xMyaq5ixjQl4M6/gaOMBXy+oAzcJ4fH7oPFep77BW/fB2Ugw4Yfkml3qnUqdD33lHa05hnPM3QE3ttxzCyXJkl8omHg6wzl6eeMLk3RsOEojOcZxtDDwM+isq/5Z6K61/HwweRik3Xj9nmbmiq3HglI8kaEc96vpVK1eI7tMyD1+X9AWMp60p9HokWcBP3yJYkpx203WXHJ+fGU0CDHA45h+PnjbL8W1o/7u+qRF2Cp69PgffqNwgX6JP+oom0gnnqNSluitXYaKpooS7IUyFufDflkjrrFdE7UT3K67w1WvFiweB75apQmPEqZUmjYxj5KvejPohWU279Ae+WrhAhyD3O+KA8/p3x5qUsppc1X8muzvv/hpIM5aONWZevIGASM/Eb3ZkJrtUxA4XPaM66x3F1aqs+/V6MRRkDXiFUQLkUh71r35/jNbAO+C+CL+NV+icMttD2vdO7DDOniHZgSRaME8OM6dmzX2fpMHjr4nQv+3uqqcTJQgw4n3LTvTSc7w0Gey6dtFmIf4CNPyScSQcmBtkPpIW9CHv4Rqw=="
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"note\": \"TEST\"\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://test.viome.com/app/dashboard/csw/kit/{{kitId}}/unregister",
+							"protocol": "https",
+							"host": [
+								"test",
+								"viome",
+								"com"
+							],
+							"path": [
+								"app",
+								"dashboard",
+								"csw",
+								"kit",
+								"{{kitId}}",
+								"unregister"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
