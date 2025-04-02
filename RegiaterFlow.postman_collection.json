@@ -61,12 +61,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://testapp.viome.com/api/authenticate/credentials",
-							"protocol": "https",
+							"raw": "{{base_url}}/api/authenticate/credentials",
 							"host": [
-								"testapp",
-								"viome",
-								"com"
+								"{{base_url}}"
 							],
 							"path": [
 								"api",
@@ -192,10 +189,6 @@
 							{
 								"key": "x-version",
 								"value": "7.1.0"
-							},
-							{
-								"key": "Cookie",
-								"value": "_gid=GA1.2.1288376993.1743320836; _gcl_au=1.1.1401147094.1743320837; _fbp=fb.1.1743320836610.786644735345975741; _ga=GA1.2.293851551.1742992822; _uetsid=337675800d3b11f0b5fc13a69370a323; _uetvid=337655500d3b11f082b6cb0ae7b90198; authenticator=1-97f6f5b365ea0bdfc057dea3948ee505de20be24-1-VUmqSPM/eN1EPmvt7dB+50jpA2Cjb78p/Mn2shEE6FKsW+ztIXuj5Q3FYzdB2m+/lBYBr3SogAw3VlCQqfVAJlQGU8liPqefUs/hxe17gBTPPOrzKSpvuDQkhAs6iF6+6st3Bn04yfOqf5m0xIUUou9auz6RckBMjGbEJcuT8+MTwsmGqxpMVw84ZLOP3KEH6tl9dlpp1nrNoCBqKdsMCuf40jZ1kZTpXPUOW4ANygePQdUZyAEIdr+zfatHZ8uwLJsXiq59UUD0CIszB/3R/uK9GdUfDgK+2C0zLvkTODj/O8XVyS8zSY6ePOSGOp2obOO3pSiAQhL6a8q2yKI+7uYSNgcjGDVb4xmRP2oQMOFgcOOJD8FXZwK4IEmlj+pJOy1XqMgA5bD91szvXpHqtNjAeURiUpClRxBmFrTAkljiPt8+bxbG4bBYUTeDCdCd9Zw4hVMTgWR/AHxlXEdOZGy2YpURCVAr5QdN+soMHOER2Xxw67GCi5bMRoAk5wPdBhd5rsA6VOiccnwQC1r5u9V0nvtwJqf2ghUwKM11rqb3BzqFnhxaGTW74S4rcrQ5LZ/VCBFE/LziaoyM5P6k0bi/h31qSh3zMn/EeVhTWLx1vSJZBRGQ6Nb8xiJ3kHopAnOPJDeMETZhKDfln7erEa/b+KNuG/GwCenqYPJCY9ZycW5TVC9zMNFpaFgcopfCASPtai6OGvjYvobRQxRkoVafHZk6jXYgQRsy0wWU2wNM; _gat_G-8B9M9KJCT6=1; _gat=1; _ga_K3P5PSXTVT=GS1.1.1743318840.17.1.1743321585.56.0.0; _ga_8B9M9KJCT6=GS1.1.1743318839.21.1.1743321585.0.0.0"
 							}
 						],
 						"url": {
@@ -350,7 +343,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"kitId\":\"{{kitId}}\"}",
+							"raw": "{\n    \"kitId\": \"{{kitId}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1093,7 +1086,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"kitId\": \"{{kitId}}\",\n    \"address\": {\n        \"addressLine1\": \"105th Ave NE\",\n        \"addressLine2\": \"205\",\n        \"city\": \"Bellevue\",\n        \"country\": \"US\",\n        \"state\": \"WA\",\n        \"zip\": \"98004\",\n        \"isShippable\": false\n    },\n    \"dateOfBirth\": \"2004-06-08\"\n}",
+							"raw": "{\n    \"kitId\": \"{{kitId}}\",\n    \"address\": {\n        \"addressLine1\": \"105th Ave NE\",\n        \"addressLine2\": \"205\",\n        \"city\": \"Bellevue\",\n        \"country\": \"US\",\n        \"state\": \"WA\",\n        \"zip\": \"98004\",\n        \"isShippable\": false\n    },\n    \"dateOfBirth\": \"1990-06-08\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2048,6 +2041,21 @@
 								"type": "text/javascript",
 								"packages": {}
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var randomNumber = Math.floor(Math.random() * 90000) + 10000;",
+									"var email = \"vt.su.user+automationTest\" + randomNumber + \"@gmail.com\";",
+									"pm.collectionVariables.set(\"newEmail\", email);",
+									"",
+									"",
+									"console.log(\"email : \" +email)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
 						}
 					],
 					"request": {
@@ -2120,7 +2128,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\": \"vt.su.user+automationTest1@gmail.com\",\n    \"kitId\": \"{{kitId}}\"\n}",
+							"raw": "{\n    \"email\": \"{{newEmail}}\",\n    \"kitId\": \"{{kitId}}\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2639,49 +2647,34 @@
 									"",
 									"    const resp = pm.response.json().data;",
 									"",
-									"    var registrationAllowed = resp.registrationAllowed;",
-									"    pm.test(\"RegistrationAllowed field validation : \" + registrationAllowed, function () {",
-									"        pm.expect(registrationAllowed).to.be.a('boolean').and.to.be.exist",
+									"    var errorMessage = resp.errorMessage;",
+									"    pm.test(\"ErrorMessage field validation : \" + errorMessage, function () {",
+									"        pm.expect(errorMessage).to.eql(null);",
 									"    });",
 									"",
-									"    if (registrationAllowed) {",
-									"        var testTypes = resp.testTypes;",
-									"        testTypes.forEach(test => {",
-									"            pm.test(\"test field validation : \" + test, function () {",
-									"                pm.expect(registrationAllowed).to.be.a('boolean').and.to.be.exist",
-									"            });",
-									"        })",
-									"    } else {",
-									"        var uiMessage = resp.uiMessage;",
-									"        if (uiMessage.length > 0) {",
-									"            uiMessageData = uiMessage[0]",
-									"            var bodyText = uiMessageData.bodyText;",
-									"            pm.test(\"bodyText field validation : \" + bodyText, function () {",
-									"                pm.expect(bodyText).to.be.a('string').and.to.be.exist",
-									"            });",
-									"",
-									"            var bodyText = uiMessageData.bodyText;",
-									"            pm.test(\"bodyText field validation : \" + bodyText, function () {",
-									"                pm.expect(bodyText).to.be.a('string').and.to.be.exist",
-									"            });",
-									"",
-									"            var headerText = uiMessageData.headerText;",
-									"            pm.test(\"headerText field validation : \" + headerText, function () {",
-									"                pm.expect(headerText).to.be.a('string').and.to.be.exist",
-									"            });",
-									"",
-									"            var internalName = uiMessageData.internalName;",
-									"            pm.test(\"internalName field validation : \" + internalName, function () {",
-									"                pm.expect(internalName).to.be.a('string').and.to.be.exist",
-									"            });",
-									"        }",
-									"    }",
+									"    var registered = resp.registered;",
+									"    pm.test(\"Registered field validation : \" + registered, function () {",
+									"        pm.expect(registered).to.be.a('boolean').and.to.be.exist",
+									"    });",
 									"",
 									"} else {",
 									"    pm.test(\"Status Error : \" + status, function () {",
 									"        pm.expect.fail(\"\")",
 									"    });",
 									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"",
+									"",
 									""
 								],
 								"type": "text/javascript",
@@ -2759,7 +2752,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user\": {\n        \"email\": \"{{email}}\",\n        \"password\": \"Viome11*\",\n        \"lastName\": \"User\",\n        \"firstName\": \"Release Test\",\n        \"phone\": \"14545254425\",\n        \"countryPhoneCode\": \"US\",\n        \"smsConsent\": false\n    },\n    \"address\": {\n        \"country\": \"US\",\n        \"addressLine1\": \"105th Ave NE\",\n        \"addressLine2\": \"205\",\n        \"zip\": \"98004\",\n        \"city\": \"Bellevue\",\n        \"state\": \"WA\",\n        \"isShippable\": false\n    },\n    \"dateOfBirth\": \"1990-06-08\",\n    \"kitId\": \"{{kitId}}\",\n    \"gender\": \"Male\",\n    \"consentRecords\": [\n        {\n            \"systemId\": \"adult_fbi_screen1\",\n            \"recordValue\": \"true\"\n        }\n    ]\n}",
+							"raw": "{\n    \"user\": {\n        \"email\": \"{{newEmail}}\",\n        \"password\": \"Viome11*\",\n        \"lastName\": \"User\",\n        \"firstName\": \"Release Test\",\n        \"phone\": \"14545254425\",\n        \"countryPhoneCode\": \"US\",\n        \"smsConsent\": false\n    },\n    \"address\": {\n        \"country\": \"US\",\n        \"addressLine1\": \"105th Ave NE\",\n        \"addressLine2\": \"205\",\n        \"zip\": \"98004\",\n        \"city\": \"Bellevue\",\n        \"state\": \"WA\",\n        \"isShippable\": false\n    },\n    \"dateOfBirth\": \"1990-06-08\",\n    \"kitId\": \"{{kitId}}\",\n    \"gender\": \"Male\",\n    \"consentRecords\": [\n        {\n            \"systemId\": \"adult_fbi_screen1\",\n            \"recordValue\": \"true\"\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2782,6 +2775,33 @@
 				},
 				{
 					"name": "unregister",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"if (pm.response.code === 200) {",
+									"",
+									"",
+									"    const resp = pm.response.json();",
+									"",
+									"    var result = resp.result;",
+									"    pm.test(\"Result field validation : \" + result, function () {",
+									"        pm.expect(result).to.equal('success');",
+									"    });",
+									"",
+									"} else {",
+									"    pm.test(\"Result Error : \", function () {",
+									"        pm.expect.fail(\"\")",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -2872,6 +2892,12 @@
 					"response": []
 				}
 			]
+		}
+	],
+	"variable": [
+		{
+			"key": "newEmail",
+			"value": ""
 		}
 	]
 }
