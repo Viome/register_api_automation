@@ -1385,12 +1385,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://testapp.viome.com/api/register/newKitForExistingUser",
-							"protocol": "https",
+							"raw": "{{base_url}}/api/register/newKitForExistingUser",
 							"host": [
-								"testapp",
-								"viome",
-								"com"
+								"{{base_url}}"
 							],
 							"path": [
 								"api",
@@ -2136,12 +2133,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://testapp.viome.com/api/register/validateEmailWithKit",
-							"protocol": "https",
+							"raw": "{{base_url}}/api/register/validateEmailWithKit",
 							"host": [
-								"testapp",
-								"viome",
-								"com"
+								"{{base_url}}"
 							],
 							"path": [
 								"api",
@@ -2290,12 +2284,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://testapp.viome.com/api/register/validateAddress",
-							"protocol": "https",
+							"raw": "{{base_url}}/api/register/validateAddress",
 							"host": [
-								"testapp",
-								"viome",
-								"com"
+								"{{base_url}}"
 							],
 							"path": [
 								"api",
@@ -2450,12 +2441,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://testapp.viome.com/api/register/validateGeoAndAgeForKit",
-							"protocol": "https",
+							"raw": "{{base_url}}/api/register/validateGeoAndAgeForKit",
 							"host": [
-								"testapp",
-								"viome",
-								"com"
+								"{{base_url}}"
 							],
 							"path": [
 								"api",
@@ -2616,12 +2604,9 @@
 							}
 						},
 						"url": {
-							"raw": "https://testapp.viome.com/api/register/getConsentForms",
-							"protocol": "https",
+							"raw": "{{base_url}}/api/register/getConsentForms",
 							"host": [
-								"testapp",
-								"viome",
-								"com"
+								"{{base_url}}"
 							],
 							"path": [
 								"api",
